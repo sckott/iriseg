@@ -1,0 +1,43 @@
+install some packages
+
+```{r eval=FALSE}
+install.packages(c("rmarkdown", "xml2"))
+```
+
+load them
+
+```{r}
+library("rmarkdown")
+library("xml2")
+```
+
+Convert a word file to html
+
+```{r}
+rmarkdown::pandoc_convert("Language_History_Questionnaire.docx", output = "stuff.html")
+```
+
+Read it back in to R
+
+```{r}
+txt <- paste0(readLines("stuff.html"), collapse = "\n")
+```
+
+Take a peak at it
+
+```{r}
+cat(txt)
+```
+
+Read with `xml2` into an object that can then be sliced and diced by a researcher
+
+```{r}
+html <- xml2::read_html(txt)
+html
+```
+
+e.g., find all `li` elements
+
+```{r}
+xml2::xml_find_all(html, "//li")
+```
